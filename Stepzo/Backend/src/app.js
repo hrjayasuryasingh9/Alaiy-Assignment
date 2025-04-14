@@ -3,6 +3,9 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import UserRoutes from "./Routes/UserRoutes.js";
+import productRoutes from "./Routes/productRoutes.js";
+import cartRoutes from "./Routes/cartRoutes.js";
+import wishlistRoutes from "./Routes/wishlistRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -17,5 +20,8 @@ app.use(
 );
 
 app.use("/api/auth", UserRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 export default app;
