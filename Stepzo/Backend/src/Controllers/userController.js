@@ -257,7 +257,7 @@ const generateJWT = (email, userID, res) => {
 
 const userLogout = async (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    res.cookie("STEPZO", "", { maxAge: 0 });
     res.status(200).json({ message: "logout successfully" });
   } catch (error) {
     console.log(error);

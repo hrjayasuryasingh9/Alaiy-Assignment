@@ -3,8 +3,10 @@ import { useProductsStore } from "../Store/useProductsStore.js";
 import { Heart, Loader } from "lucide-react";
 import { useWishlistStore } from "../Store/useWishlistStore.js";
 import Footer from "./Footer.jsx";
+import { useAuthStore } from "../Store/useAuthStore.js";
 
 const HomePage = () => {
+  const { authUser } = useAuthStore();
   const { Products, getProducts, isProductLoading } = useProductsStore();
   const {
     addingProductId,
@@ -17,16 +19,10 @@ const HomePage = () => {
     getProducts();
   }, [getProducts]);
   useEffect(() => {
-    getWishlist();
-  }, [getWishlist]);
-
-  const sunGlasses = Products.filter(
-    (product) => product.category === "Sneakers"
-  ).slice(0, 6);
-
-  const others = Products.filter(
-    (product) => product.category === "Optical Frames"
-  ).slice(0, 6);
+    if (authUser) {
+      getWishlist();
+    }
+  }, [authUser, getWishlist]);
 
   const getProductDetails = () => {};
   const additemtowishlist = (id) => {
@@ -106,7 +102,7 @@ const HomePage = () => {
               </ul>
             ) : (
               <ul className="grid grid-cols-2 md:grid-cols-3 justify-items-center p-5 md:p-10 w-280 border-b-black ">
-                {sunGlasses.map((product) => (
+                {Products.slice(0, 6).map((product) => (
                   <div
                     key={product.id}
                     className="border-black/25 cursor-pointer border-1"
