@@ -249,8 +249,8 @@ const generateJWT = (email, userID, res) => {
   res.cookie("STEPZO", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: "strict",
-    secure: true,
+    sameSite: "lax",
+    secure: true, 
   });
   return token;
 };
