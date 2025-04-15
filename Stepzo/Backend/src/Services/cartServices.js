@@ -1,4 +1,4 @@
-import prisma from "../../Prisma/prismaclient.js";
+import prisma from "../../prisma/prismaclient.js";
 
 const addToCart = async (uid, pid, quantity) => {
   const item = await prisma.cart.create({

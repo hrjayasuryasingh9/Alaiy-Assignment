@@ -1,4 +1,4 @@
-import prisma from "../../Prisma/prismaclient.js";
+import prisma from "../../prisma/prismaclient.js";
 
 const addToWishlist = async (uid, pid) => {
   const item = await prisma.wishlist.create({

@@ -246,7 +246,7 @@ const userLogin = async (req, res) => {
 };
 const generateJWT = (email, userID, res) => {
   const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "7d" });
-  res.cookie("jwt", token, {
+  res.cookie("STEPZO", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
     sameSite: "strict",

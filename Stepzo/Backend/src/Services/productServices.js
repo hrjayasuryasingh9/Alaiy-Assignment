@@ -1,4 +1,4 @@
-import prisma from "../../Prisma/prismaclient.js";
+import prisma from "../../prisma/prismaclient.js";
 
 const getProducts = async () => {
   const products = await prisma.products.findMany();
