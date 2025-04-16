@@ -22,16 +22,7 @@ app.use(limiter);
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://alaiy-assignment-zzbw.vercel.app",
-      "https://67fe6f8698aa92862ce4a676--celadon-flan-c7fccd.netlify.app",
-      "https://67fe7af5cf8235008614270b--keen-stroopwafel-66e57c.netlify.app",
-      "https://alaiy-assignment.netlify.app",
-    ],
-    credentials: true,
-  })
+  cors()
 );
 
 app.use("/api/auth", UserRoutes);

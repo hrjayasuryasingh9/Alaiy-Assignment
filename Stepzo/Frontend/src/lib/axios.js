@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3005/api",
+  baseURL: "https://alaiy-assignment.onrender.com/api",
 });
 
 axiosInstance.interceptors.request.use(
