@@ -228,15 +228,20 @@ const userLogin = async (req, res) => {
       }
 
       const token = generateJWT(user.email, user.id);
-      res.status(200).header("authorization", `Bearer ${token}`).json({
-        id: user.id,
-        fullname: user.fullname,
-        email: user.email,
-        profile_pic: user.profile_pic,
-        address: user.address,
-        created_at: user.created_on,
-        token: token,
-      });
+      res
+        .status(200)
+        .header("authorization", `Bearer ${token}`)
+        .json({
+          data: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            profile_pic: user.profile_pic,
+            address: user.address,
+            created_at: user.created_on,
+          },
+          token: token,
+        });
     } else {
       return res.status(400).json({ message: "Invalid credentials" });
     }
