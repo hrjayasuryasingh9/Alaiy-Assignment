@@ -4,9 +4,12 @@ import { Heart, Loader } from "lucide-react";
 import { useWishlistStore } from "../Store/useWishlistStore.js";
 import Footer from "./Footer.jsx";
 import { useAuthStore } from "../Store/useAuthStore.js";
+import { useCartStore } from "../Store/useCartStore.js";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const { authUser } = useAuthStore();
+  const { getCart } = useCartStore();
   const { Products, getProducts, isProductLoading } = useProductsStore();
   const {
     addingProductId,
@@ -15,16 +18,18 @@ const HomePage = () => {
     getWishlist,
     removeitemfromwishlist,
   } = useWishlistStore();
-  useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (authUser) {
       getWishlist();
+      getCart();
     }
   }, [authUser, getWishlist]);
 
-  const getProductDetails = () => {};
+  const getProductDetails = (productid) => {
+    navigate(`productview/${productid}`);
+  };
   const additemtowishlist = (id) => {
     addToWishlist(id);
   };
@@ -47,30 +52,76 @@ const HomePage = () => {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col">
-        <h1 className="text-3xl py-10 sm:inline text-lg">
-          EXPLORE THE SELECTION
-        </h1>
+        <h1 className="text-3xl py-10">EXPLORE THE SELECTION</h1>
         <div className="flex justify-center items-center w-full px-5 pb-5 md:pt-2">
-          <div className="flex justify-center items-center gap-5 md:gap-20">
-            <div className="flex justify-between items-center flex-col">
-              <div className="min-w-[120px] max-w-[350px]">
+          <div className="carousel rounded-box min-w-50 max-w-90 hide-carousel">
+            <div className="carousel-item w-full flex justify-center items-center flex-col cursor-pointer">
+              <div className="flex justify-center items-center w-[100%] h-[90%] overflow-hidden p-2">
                 <img
-                  src="https://ap.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2024/central/category/women_sunglasses/Women_SG_WW_HP_Category_Push_20240614_DII.jpg"
-                  alt="no image found"
-                  className="h-full w-full"
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/close-up-futuristic-sneakers_23-2151005668_11zon_fezth7.jpg"
+                  className="w-full"
+                  alt="Tailwind CSS Carousel component"
                 />
               </div>
-              <p className="py-3 text-sm md:text-lg">Unisexual Sun Glasses</p>
+              <div className="flex justify-center items-center flex-col p-3">
+                <h1 className="font-sm text-black ">Sneakers</h1>
+              </div>
             </div>
-            <div className="flex justify-between items-center flex-col">
-              <div className="min-w-[120px] max-w-[350px]">
+            <div className="carousel-item w-full flex justify-center items-center flex-col cursor-pointer">
+              <div className="flex justify-center items-center w-[100%] h-[90%] overflow-hidden p-2">
                 <img
-                  src="https://ap.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2024/central/category/women_sunglasses/Women_SG_WW_HP_Category_Push_20240614_DII.jpg"
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/dark-blue-show-rock_52683-94821_11zon_s0hz09.jpg"
+                  className="w-full"
+                  alt="Tailwind CSS Carousel component"
+                />
+              </div>
+              <div className="flex justify-center items-center flex-col p-3">
+                <h1 className="font-sm text-black ">Loafers</h1>
+              </div>
+            </div>
+            <div className="carousel-item w-full flex justify-center items-center flex-col cursor-pointer">
+              <div className="flex justify-center items-center w-[100%] h-[90%] overflow-hidden p-2">
+                <img
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/beautiful-straw-hat-with-blue-flip-flops-yellow-vibrant-vivid-background-top-view-flat-lay-summer-travel-vacation-concept_1220-1850_11zon_bhmmvb.jpg"
+                  className="w-full"
+                  alt="Tailwind CSS Carousel component"
+                />
+              </div>
+              <div className="flex justify-center items-center flex-col p-3">
+                <h1 className="font-sm text-black ">Sandels</h1>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center items-center gap-5 md:gap-20 hide-i-carousel">
+            <div className="flex justify-between items-center flex-col cursor-pointer">
+              <div className="min-w-[120px] max-w-[350px] ">
+                <img
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/close-up-futuristic-sneakers_23-2151005668_11zon_fezth7.jpg"
                   alt="no image found"
                   className="h-full w-full"
                 />
               </div>
-              <p className="py-3 text-sm md:text-lg">Unisexual Eye Wear</p>
+              <p className="py-3 text-sm md:text-lg">Sneakers</p>
+            </div>
+            <div className="flex justify-between items-center flex-col cursor-pointer">
+              <div className="min-w-[120px] max-w-[350px]">
+                <img
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/dark-blue-show-rock_52683-94821_11zon_s0hz09.jpg"
+                  alt="no image found"
+                  className="h-full w-full"
+                />
+              </div>
+              <p className="py-3 text-sm md:text-lg">Loafers</p>
+            </div>
+            <div className="flex justify-between items-center flex-col cursor-pointer">
+              <div className="min-w-[120px] max-w-[350px]">
+                <img
+                  src="https://res.cloudinary.com/dgino6jbz/image/upload/v1744710997/beautiful-straw-hat-with-blue-flip-flops-yellow-vibrant-vivid-background-top-view-flat-lay-summer-travel-vacation-concept_1220-1850_11zon_bhmmvb.jpg"
+                  alt="no image found"
+                  className="h-full w-full"
+                />
+              </div>
+              <p className="py-3 text-sm md:text-lg">Sandels</p>
             </div>
           </div>
         </div>
@@ -80,7 +131,7 @@ const HomePage = () => {
           className="h-[400px] w-full bg-center bg-cover bg-no-repeat md:h-[670px]"
           style={{
             backgroundImage:
-              "url('https://img.freepik.com/free-photo/man-sporting-white-sneakers_91128-3726.jpg?t=st=1744635785~exp=1744639385~hmac=bca5ef015662d25b89757582f4af732281ed52395dbd563bbb71157ae70c590e&w=1380')",
+              "url('https://img.freepik.com/free-photo/confident-european-lady-white-sneakers-sitting-chair-making-faces-portrait-wonderful-girl-posing_197531-9341.jpg?t=st=1744711743~exp=1744715343~hmac=884cab75be1d17d93eb74a836e18bf94d95af8664ed6bb1c10360e835ed5a320&w=1380')",
           }}
         ></div>
         <div className="z-10 bg-base-100">
@@ -106,7 +157,10 @@ const HomePage = () => {
                   <div
                     key={product.id}
                     className="border-black/25 cursor-pointer border-1"
-                    onClick={getProductDetails}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      getProductDetails(product.id);
+                    }}
                   >
                     <div className="min-w-38 max-w-100 relative">
                       {addingProductId === product.id ? (
@@ -150,7 +204,12 @@ const HomePage = () => {
             )}
           </div>
           <div className="flex justify-center items-center py-10 mb-10">
-            <button className="btn btn-outline p-6 rounded-4xl hover:bg-transparent hover:text-inherit hover:border-2 border-black transition-all duration-400 ease-in-out">
+            <button
+              className="btn btn-outline p-6 rounded-4xl hover:bg-transparent hover:text-inherit hover:border-2 border-black transition-all duration-400 ease-in-out"
+              onClick={() => {
+                navigate("/products");
+              }}
+            >
               Discover The Selection
             </button>
           </div>
@@ -163,9 +222,9 @@ const HomePage = () => {
         </div>
         <div className="flex justify-center items-center">
           <p className=" text-[15px] max-w-3xl text-center text-black/75 pb-7 px-2">
-            TRIYZ offers complimentary personalization, book-an-eye-test
-            appointments, and a range of exclusive optical services for a
-            seamless eyewear experience.
+            Stepzo offers complimentary size consultations, book-a-try-on
+            appointments, and a curated collection of sandals, sneakers, and
+            loafers for a seamless footwear experience.
           </p>
         </div>
         <div className="flex justify-center items-center p-5">

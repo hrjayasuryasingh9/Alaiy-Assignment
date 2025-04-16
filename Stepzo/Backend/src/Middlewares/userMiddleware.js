@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import * as userServices from "../Services/userServices.js";
 
 const protectRoute = async (req, res, next) => {
-  const token = req.cookies.STEPZO;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "unauthorized, please Login" });
   }

@@ -43,6 +43,7 @@ export const useAuthStore = create((set, get) => ({
       const response = await axiosInstance.post("/auth/login", data);
       const user = response.data;
       if (user) {
+        localStorage.setItem("STEPZO_TOKEN", user.token);
         set({ authUser: user });
         toast.success("Login Successfuly");
         return true;
@@ -59,6 +60,7 @@ export const useAuthStore = create((set, get) => ({
   Logoutuser: async () => {
     try {
       await axiosInstance.get("/auth/logout");
+      localStorage.removeItem("STEPZO_TOKEN");
       set({ authUser: null });
       toast.success("Logged out successfully");
     } catch (error) {

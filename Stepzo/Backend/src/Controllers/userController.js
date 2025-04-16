@@ -38,7 +38,7 @@ const signUpUser = async (req, res) => {
       is_verified,
       verificationToken
     );
-    const verificationLink = `http://localhost:3005/api/auth/verify?token=${verificationToken}`;
+    const verificationLink = `https://alaiy-assignment.onrender.com/api/auth/verify?token=${verificationToken}`;
     const mailOptions = {
       from: '"Stepzo" <www.smdaffan5.www@gmail.com>',
       to: email,
@@ -192,7 +192,7 @@ const getVerified = async (req, res) => {
     if (result === "invalid or expired token") {
       res.status(500).json({ message: "invalid or expired token" });
     } else {
-      res.send("<h2>Email verified successfully! You can now log in.</h2>");
+      res.redirect(`${process.env.F_URL}/login`);
     }
   } catch (error) {
     console.error(error);
@@ -227,14 +227,15 @@ const userLogin = async (req, res) => {
         return res.status(401).json({ message: "Invalid credentials" });
       }
 
-      generateJWT(user.email, user.id, res);
-      res.status(200).json({
+      const token = generateJWT(user.email, user.id);
+      res.status(200).header("authorization", `Bearer ${token}`).json({
         id: user.id,
         fullname: user.fullname,
         email: user.email,
         profile_pic: user.profile_pic,
         address: user.address,
         created_at: user.created_on,
+        token: token,
       });
     } else {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -246,12 +247,6 @@ const userLogin = async (req, res) => {
 };
 const generateJWT = (email, userID, res) => {
   const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "7d" });
-  res.cookie("STEPZO", token, {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
   return token;
 };
 
@@ -291,7 +286,7 @@ const forgotPassword = async (req, res) => {
       email,
       verificationToken
     );
-    const verificationLink = `http://localhost:3005/changepassword?token=${verificationToken}`;
+    const verificationLink = `${process.env.F_URL}/changepassword?token=${verificationToken}`;
     const mailOptions = {
       from: '"Stepzo" <www.smdaffan5.www@gmail.com>',
       to: email,

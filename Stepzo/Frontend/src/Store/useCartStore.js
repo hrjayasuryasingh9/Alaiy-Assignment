@@ -1,22 +1,23 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { addToWishlist } from "../../../Backend/src/Services/wishlistServices";
 
-export const useCartStore = create((get, set) => ({
+export const useCartStore = create((set, get) => ({
   isGettingcart: false,
   addingProductTocart: null,
   cartProductIds: [],
   cart: [],
-  addToWishlist: async (id) => {
+  addToCart: async (id) => {
     try {
       set({ addingProductTocart: id });
       const data = { pid: id, quantity: 1 };
       const item = await axiosInstance.post("/cart/addtocart", data);
       const { cartProductIds, cart } = get();
       const itemdata = item.data.data;
+      console.log(itemdata);
       const updatedCart = [...cart, itemdata];
       const updatedIds = [...cartProductIds, id];
+      console.log(updatedCart);
       set({ cartProductIds: updatedIds, cart: updatedCart });
       toast.success("Product added to cart");
     } catch (error) {
@@ -52,12 +53,30 @@ export const useCartStore = create((get, set) => ({
       );
       const updatedCart = cart.filter((item) => item.products.id !== pid);
       const updatedIds = cartProductIds.filter((itemId) => itemId !== pid);
-      toast.success("Product Removed From The wishlist");
+      set({ cart: updatedCart, cartProductIds: updatedIds });
+      toast.success("Product Removed From The Cart");
     } catch (error) {
       console.log(error);
       toast.error(error.message || "Something went wrong");
     } finally {
       set({ addingProductTocart: null });
+    }
+  },
+  changeQuantity: async (cartId, newQuantity) => {
+    try {
+      await axiosInstance.patch(`/cart/updatecartitem/${cartId}`, {
+        quantity: newQuantity,
+      });
+      set((state) => ({
+        cart: state.cart.map((item) =>
+          item.id === cartId
+            ? { ...item, quantity: Math.max(1, newQuantity) }
+            : item
+        ),
+      }));
+    } catch (error) {
+      console.error("Failed to update quantity:", error);
+      toast.error(error.response?.data?.message || "Failed to update quantity");
     }
   },
 }));

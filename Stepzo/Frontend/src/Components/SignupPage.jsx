@@ -32,7 +32,7 @@ const SignupPage = () => {
     <div>
       <div className="w-full h-auto flex flex-col md:flex-row justify-center items-center py-5 pt-12">
         <div className="h-screen w-full flex justify-center items-center flex-col md:w-[50%] pt-15">
-          <h1 className="text-center text-3xl">Welcome to TRYIZ</h1>
+          <h1 className="text-center text-3xl">Welcome to Stepzo</h1>
           <h1 className="text-center text-lg py-3 max-w-[80%]">
             Sign up with your email address and your password
           </h1>
@@ -232,7 +232,7 @@ const SignupPage = () => {
               <p className="validator-hint">Must be 10 digits</p>
             </div>
             <div className="text-start w-[80%] pb-2">
-              Do you have an Tryiz Account ?
+              Do you have an Stepzo Account ?
               <a
                 className="link link-neutral"
                 onClick={() => {

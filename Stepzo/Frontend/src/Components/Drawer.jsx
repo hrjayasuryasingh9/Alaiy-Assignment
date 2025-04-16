@@ -3,8 +3,38 @@ import React from "react";
 import { useAuthStore } from "../Store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { LogOut, LogIn, UserPlus } from "lucide-react";
+import { useState } from "react";
+import { useProductsStore } from "../Store/useProductsStore";
 
 const Drawer = ({ isOpen, onClose }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const { Products } = useProductsStore();
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setFilteredProducts([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const results = Products.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProducts(results);
+    setShowDropdown(true);
+  };
+
+  const handleSelectProduct = (productName, productid) => {
+    setSearchQuery(productName);
+    setShowDropdown(false);
+    console.log(productid);
+    onClose();
+    navigate(`/productview/${productid}`);
+  };
+
   const { authUser, Logoutuser } = useAuthStore();
   const navigate = useNavigate();
   const handleLogin = () => {
@@ -20,6 +50,7 @@ const Drawer = ({ isOpen, onClose }) => {
     onClose();
     Logoutuser();
   };
+
   return (
     <>
       {isOpen && (
@@ -48,7 +79,40 @@ const Drawer = ({ isOpen, onClose }) => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-xl font-semibold">
+        <ul className="menu bg-base-200 text-base-content min-h-full w-full p-4 text-xl font-semibold">
+          <li className="w-full">
+            <div className="relative flex pl-2 hide-carousel font-normal text-sm w-full">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="input w-full"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={() => searchQuery && setShowDropdown(true)}
+                onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+              />
+              {showDropdown && filteredProducts.length > 0 && (
+                <ul className="absolute mt-1 z-50 bg-base-100 border rounded-md w-[80%] shadow-md max-h-[200px] overflow-scroll top-13">
+                  {filteredProducts.map((product) => (
+                    <li
+                      key={product.id}
+                      className="px-4 py-2 hover:bg-base-200 cursor-pointer"
+                      onMouseDown={() =>
+                        handleSelectProduct(product.name, product.id)
+                      }
+                    >
+                      <div className="flex justify-start w-full items-center">
+                        <span>
+                          <img src={product.images} alt="" className="h-9" />
+                        </span>
+                        <span>{product.name}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
           {!authUser ? (
             <div>
               <li>

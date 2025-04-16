@@ -10,6 +10,7 @@ const addToCart = async (uid, pid, quantity) => {
     select: {
       id: true,
       added_at: true,
+      quantity: true,
       products: {
         select: {
           id: true,

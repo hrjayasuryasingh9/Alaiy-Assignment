@@ -11,6 +11,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     forgotPasswrod(email);
   };
+
   return (
     <div>
       <div className="w-full h-auto flex flex-col md:flex-row justify-center items-center py-5 pt-40 pb-15">
@@ -56,7 +57,7 @@ const ForgotPassword = () => {
               </div>
             </div>
             <div className="text-start w-[80%] pb-2">
-              Do you remember your Tryiz Account password ?
+              Do you remember your Stepzo Account password ?
               <a
                 className="link link-neutral"
                 onClick={() => {

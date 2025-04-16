@@ -117,7 +117,7 @@ const LoginPage = () => {
               </a>
             </div>
             <div className="text-start w-[80%] pb-5">
-              Dont have an Tryiz Account ?
+              Dont have an Stepzo Account ?
               <a
                 className="link link-neutral"
                 onClick={() => {
@@ -145,7 +145,7 @@ const LoginPage = () => {
             <div className="flex justify-center items-center bg-[#f6f5f3] min-w-[50%] max-w-[100%] flex-col ">
               <div className="flex justify-items-start flex-col p-5">
                 <div className="text-black/70 px-5 text-[12px] flex justify-items-start">
-                  WHAT YOU FIND IN YOUR TRYIZ ACCOUNT
+                  WHAT YOU FIND IN YOUR Stepzo ACCOUNT
                 </div>
                 <div className="text-black text-[13px] mx-5 border-b-1 border-black/25  flex justify-center items-center py-6">
                   <ShoppingBag className="pr-2" />
@@ -163,7 +163,7 @@ const LoginPage = () => {
                 </div>
                 <div className="text-black text-[13px] mx-5  border-black/25  flex justify-items-start py-6">
                   <ShoppingBag className="pr-2" />
-                  <span>Create, view and share your wishlist</span>
+                  <span>Create and view your wishlist</span>
                 </div>
               </div>
             </div>

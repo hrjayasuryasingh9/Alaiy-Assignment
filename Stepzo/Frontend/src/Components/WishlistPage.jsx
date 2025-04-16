@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import Footer from "./Footer";
-import { Heart, Loader, ShoppingBag } from "lucide-react";
+import { Heart, Loader, ShoppingBag, Trash } from "lucide-react";
 import { useWishlistStore } from "../Store/useWishlistStore";
+import { useCartStore } from "../Store/useCartStore";
+import { useNavigate } from "react-router-dom";
+
 const WishlistPage = () => {
+  const navigate = useNavigate();
   const {
     getWishlist,
     wishlist,
@@ -11,11 +15,21 @@ const WishlistPage = () => {
     wishlistProductsId,
     removeitemfromwishlist,
   } = useWishlistStore();
+  const {
+    getCart,
+    addingProductTocart,
+    cartProductIds,
+    addToCart,
+    removeFromCart,
+  } = useCartStore();
   useEffect(() => {
     getWishlist();
   }, [getWishlist]);
+
   const wishlistlength = wishlist.length;
-  const getProductDetails = () => {};
+  const getProductDetails = (productId) => {
+    navigate(`/productview/${productId}`);
+  };
   return (
     <div className="">
       <div className="bg-base-100 w-full pt-20 min-h-screen">
@@ -40,7 +54,10 @@ const WishlistPage = () => {
                 <div
                   key={product.id}
                   className="border-black/25 cursor-pointer border-1"
-                  onClick={getProductDetails}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    getProductDetails(product.products.id);
+                  }}
                 >
                   <div className="min-w-38 max-w-100 relative">
                     {addingProductId === product.products.id ? (
@@ -70,36 +87,38 @@ const WishlistPage = () => {
                     />
                   </div>
                   <div className="py-3 pb-4 flex justify-center items-center flex-col">
-                    <div className="flex justify-center items-center text-center text-[13px] text-black font-medium px-2">
+                    <div className="flex justify-center items-center text-center text-[13px] text-black font-medium px-2 min-w-[100px] max-w-full">
                       {product.products.name}
                     </div>
                     <h1 className="text-sm text-black/65">
                       ₹ {product.products.price}
                     </h1>
-                    <a className="link link-neutral">Shop Now</a>
+                    <div className="w-full flex justify-between px-2 items-center">
+                      <a className="link link-neutral">Shop Now</a>
 
-                    <div className="relative w-full">
-                      {addingProductId === product.products.id ? (
-                        <Loader className="absolute size-5 -top-5 right-3 animate-spin " />
-                      ) : wishlistProductsId.includes(product.products.id) ? (
-                        <a
-                          className="link-neutral link absolute  -top-6 right-2"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeitemfromwishlist(product.products.id);
-                          }}
-                        >
-                          In Cart
-                        </a>
-                      ) : (
-                        <ShoppingBag
-                          className="absolute size-5 -top-5 right-3 text-black"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            additemtowishlist(product.products.id);
-                          }}
-                        />
-                      )}
+                      <div className="">
+                        {addingProductTocart === product.products.id ? (
+                          <Loader className=" size-5 animate-spin " />
+                        ) : cartProductIds.includes(product.products.id) ? (
+                          <a
+                            className=""
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeFromCart(product.products.id);
+                            }}
+                          >
+                            <Trash className="size-5" />
+                          </a>
+                        ) : (
+                          <ShoppingBag
+                            className=" size-5  text-black"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(product.products.id);
+                            }}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
