@@ -109,12 +109,17 @@ npm start
 ### 🛠️ Required `.env` Variables
 
 ```env
-DATABASE_URL=your_postgresql_db_url
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 NODEMAILER_EMAIL=your_email@example.com
-NODEMAILER_PASS=your_email_password
+NODEMAILER_PASS=your_email_app_password
+
+JWT_SECRET=your_jwt_secret
+
+DATABASE_URL=your_postgresql_connection_string
+
+STRIPE_SECRET_KEY=your_stripe_secret_key
+
+FRONTEND_URL=your_frontend_url
+
 ```
 
 ```bash
