@@ -136,7 +136,7 @@ Check out the live version here 👉 [Stepzo Live Demo](https://alaiy-assignment
 
 ---
 
-## 🌐 Project Documentation
+## 📖 Project Documentation
 
 Check out the Project Documentation Here 👉 [Stepzo Project Documentation](https://drive.google.com/file/d/17MPI-h3B_McZW_kvnJk7bl7pvwB3ZARu/view?usp=sharing)
 
